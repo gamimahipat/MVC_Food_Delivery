@@ -1,0 +1,218 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Adminpage.cshtml";
+}
+
+<script>
+   $(document).ready(function () {
+
+        var message = "@TempData["ssmessage"]";
+
+        if (message != "") {
+        Swal.fire({
+
+        icon: 'success',
+        title: message,
+        showConfirmButton: false,
+        timer: 1500
+        })
+
+
+
+        }
+   });
+  
+</script>
+
+<section class="content">
+
+    <div class="row">
+
+        <div class="col-xl-3 col-md-6 col-12">
+            <div class="box box-body">
+                <h6 class="mb-0">
+                    <span class="text-uppercase">ORDER RECEIVED</span>
+                    <span class="float-right"><a class="btn btn-xs btn-primary" href="@Url.Action("OrderView", "Admin")">View</a></span>
+                </h6>
+                <br>
+                <small>Total Orders</small>
+                <p class="font-size-26">@Session["ordercount"]</p>
+
+                <div class="progress progress-xxs mt-0 mb-10">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: @Session["ordercount"]%; height: 4px;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="font-size-12"><i class="ion-arrow-graph-up-right text-success mr-1"></i> %18 decrease from last month</div>
+            </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-xl-3 col-md-6 col-12">
+            <div class="box box-body">
+                <h6 class="mb-0">
+                    <span class="text-uppercase">TAX DEDUCATION</span>
+                    @*<span class="float-right"><a class="btn btn-xs btn-primary" href="#">View</a></span>*@
+                </h6>
+                <br>
+                <small>Tex Deduction</small>
+                <p class="font-size-26">₹@Session["ordertotalprice"]</p>
+
+                <div class="progress progress-xxs mt-0 mb-10">
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: 75%; height: 4px;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="font-size-12"><i class="ion-arrow-graph-up-right text-success mr-1"></i> 20% income tex</div>
+            </div>
+        </div>
+        <!-- /.col -->
+
+        <div class="col-xl-3 col-md-6 col-12">
+            <div class="box box-body">
+                <h6 class="mb-0">
+                    <span class="text-uppercase">REVENUE STATUS</span>
+                    @*<span class="float-right"><a class="btn btn-xs btn-primary" href="#">View</a></span>*@
+                </h6>
+                <br>
+                <small>Revenue Status</small>
+                <p class="font-size-26">₹@Session["revenuestatus"]</p>
+
+                <div class="progress progress-xxs mt-0 mb-10">
+                    <div class="progress-bar bg-info" role="progressbar" style="width: 55%; height: 4px;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="font-size-12"><i class="ion-arrow-graph-down-right text-danger mr-1"></i> %41 down last year</div>
+            </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-xl-3 col-md-6 col-12">
+            <div class="box box-body">
+                <h6 class="mb-0">
+                    <span class="text-uppercase">TOTAL SALES</span>
+                    @*<span class="float-right"><a class="btn btn-xs btn-primary" href="#">View</a></span>*@
+                </h6>
+                <br>
+                <small>Total Income</small>
+                <p class="font-size-26">₹@Session["totalprice"]</p>
+
+                <div class="progress progress-xxs mt-0 mb-10">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: 52%; height: 4px;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="flexbox font-size-12">
+                    <span><i class="ion-arrow-graph-down-right text-success mr-1"></i> %37 up last year</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 col-12">
+            <div class="box box-body">
+                <h6 class="mb-0">
+                    <span class="text-uppercase">TOTAL CUSTOMERS</span>
+                    <span class="float-right"><a class="btn btn-xs btn-primary" href="@Url.Action("CustomerList", "Admin")">View</a></span>
+                </h6>
+                <br>
+                <small>Total Customers</small>
+                <p class="font-size-26">@Session["customercount"]</p>
+
+                <div class="progress progress-xxs mt-0 mb-10">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width:@Session["customercount"]px; height: 4px;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="flexbox font-size-12">
+                    <span><i class="ion-arrow-graph-down-right text-success mr-1"></i> %50 up last year</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 col-12">
+            <div class="box box-body">
+                <h6 class="mb-0">
+                    <span class="text-uppercase">TOTAL CATEGORES</span>
+                    <span class="float-right"><a class="btn btn-xs btn-primary" href="@Url.Action("Index", "Category_Master")">View</a></span>
+                </h6>
+                <br>
+                <small>Total Categores</small>
+                <p class="font-size-26">@Session["categorycount"]</p>
+
+                <div class="progress progress-xxs mt-0 mb-10">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width:@Session["categorycount"]px; height: 4px;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="flexbox font-size-12">
+                    <span><i class="ion-arrow-graph-down-right text-success mr-1"></i> %12 up last year</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 col-12">
+            <div class="box box-body">
+                <h6 class="mb-0">
+                    <span class="text-uppercase">TOTAL PRODUCTS</span>
+                    <span class="float-right"><a class="btn btn-xs btn-primary" href="@Url.Action("Index", "ProductMaster")">View</a></span>
+                </h6>
+                <br>
+                <small>Total Products</small>
+                <p class="font-size-26">@Session["productcount"]</p>
+
+                <div class="progress progress-xxs mt-0 mb-10">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width:@Session["productcount"]px; height: 4px;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="flexbox font-size-12">
+                    <span><i class="ion-arrow-graph-down-right text-success mr-1"></i> %30 up last year</span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-xl-3 col-md-6 col-12">
+            <div class="box box-body">
+                <h6 class="mb-0">
+                    <span class="text-uppercase">TOTAL PAYMENTS</span>
+                    <span class="float-right"><a class="btn btn-xs btn-primary" href="@Url.Action("PaymentList", "Admin")">View</a></span>
+                </h6>
+                <br>
+                <small>Total Paymnets</small>
+                <p class="font-size-26">@Session["paymentcount"]</p>
+
+                <div class="progress progress-xxs mt-0 mb-10">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width:@Session["paymentcount"]px; height: 4px;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="flexbox font-size-12">
+                    <span><i class="ion-arrow-graph-down-right text-success mr-1"></i> %35 up last year</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 col-12">
+            <div class="box box-body">
+                <h6 class="mb-0">
+                    <span class="text-uppercase">TOTAL COOCK</span>
+                    <span class="float-right"><a class="btn btn-xs btn-primary" href="@Url.Action("CooclList", "Coock")">View</a></span>
+                </h6>
+                <br>
+                <small>Total Coock</small>
+                <p class="font-size-26">@Session["coockcount"]</p>
+
+                <div class="progress progress-xxs mt-0 mb-10">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: @Session["coockcount"]%; height: 4px;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="font-size-12"><i class="ion-arrow-graph-up-right text-success mr-1"></i>  %50 up last year</div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 col-12">
+            <div class="box box-body">
+                <h6 class="mb-0">
+                    <span class="text-uppercase">TOTAL DELIVERY</span>
+                    <span class="float-right"><a class="btn btn-xs btn-primary" href="@Url.Action("DeliveryList", "Delivery")">View</a></span>
+                </h6>
+                <br>
+                <small>Total Delivery</small>
+                <p class="font-size-26">@Session["deliverykcount"]</p>
+
+                <div class="progress progress-xxs mt-0 mb-10">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: @Session["deliverykcount"]%; height: 4px;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="font-size-12"><i class="ion-arrow-graph-up-right text-success mr-1"></i> %50 up last year</div>
+            </div>
+        </div>
+
+    </div>
+
+
+</section>
+<!-- /.content -->

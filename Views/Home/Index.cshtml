@@ -1,0 +1,203 @@
+﻿@model IEnumerable<MVC_Food_Delivery.Models.Product_Master>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+
+
+
+<div class="banner-area">
+    <div class="banner-img">
+        <img src="~/Images/1.jpg" alt="Banner">
+        @*<img src="~/Images/1.jpg" />*@
+        <img class="wow fadeInRightBig" src="~/Images/1.jpg" alt="Banner">
+    </div>
+    <div class="d-table">
+        <div class="d-table-cell">
+            <div class="container">
+                <div class="banner-text">
+                    <h1>Get Your Best Food Order</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+                    @*<div class="cmn-btn">
+                            <a class="banner-btn-left" href="service-details.html">
+                                <i class='bx bx-meteor'></i>
+                                Explore Service
+                            </a>
+                            <a class="banner-btn-right" href="tel:+123456789">
+                                <i class='bx bx-phone-call'></i>
+                                +123456789
+                            </a>
+                        </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br /><br />
+ 
+
+<br /><br />
+<section class="quality-area">
+    <div class="quality-img">
+        <img src="~/Images/2.jpg" alt="Quality">
+        <img src="~/Images/2.jpg" alt="Quality">
+        <img src="~/Images/2.jpg" alt="Quality">
+    </div>
+    <div class="container">
+        <div class="quality-content">
+            <div class="section-title">
+                <h2>Quality Work is Our First Priority </h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+            </div>
+            <div class="cmn-btn">
+                <a class="banner-btn-left" href="#">
+                    Read More
+                </a>
+            </div>
+            <img src="~/Images/2.jpg" alt="Quality">
+        </div>
+    </div>
+</section>
+<!--<section class="parts-area pt-100 pb-70">
+    <div class="container">
+        <div class="section-title">
+            <h2>PRODUCTS</h2>
+        </div>
+        <div class="sorting-menu">
+            <ul>
+
+                <li class="filter active" data-filter="all">All Product</li>
+                <li class="filter" data-filter=".apetizer">APETIZER</li>
+                <li class="filter" data-filter=".desert">DESERT</li>
+                <li class="filter" data-filter=".peanut">PEANUTS</li>
+                <li class="filter" data-filter=".rice">RICE</li>-->
+@*<li class="filter" data-filter=".branding">tyre</li>*@
+<!--</ul>
+</div>-->
+@*<div id="Container" class="row">
+
+        <div class="col-sm-6 col-lg-3 mix apetizer">
+            <div class="parts-item">
+                <div class="parts-top">
+                    <img src="~/images/SpringRoll.jpg" style="height: 142px; width: 142px" alt="Parts">
+                </div>
+                <h3>Audeck Tyre 200</h3>
+                <span>$120.00</span>
+                <div class="cmn-btn">
+                    <a class="banner-btn-left" href="cart.html">
+                        Book Now
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3 mix apetizer">
+            <div class="parts-item">
+                <div class="parts-top">
+
+                    <img src="~/Images/papdichat.jpg" style="height: 142px; width: 142px" alt="Parts">
+                </div>
+                <span id="springRollname"></span>>
+                <h3>Audeck Gear 200</h3>
+                <span>$110.00</span>
+                <div class="cmn-btn">
+                    <a class="banner-btn-left" href="cart.html">
+                        Book Now
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3 mix desert">
+            <div class="parts-item">
+                <div class="parts-top">
+
+                    <img src="~/Images/Jalebi.jpg" style="height: 142px; width: 142px" alt="Parts">
+                </div>
+                <h3>Audeck Seat 200</h3>
+                <span>$130.00</span>
+                <div class="cmn-btn">
+                    <a class="banner-btn-left" href="cart.html">
+                        Book Now
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3 mix desert">
+            <div class="parts-item">
+                <div class="parts-top">
+                    <img src="~/Images/Applepie.jpg" style="height: 142px; width: 142px" alt="Parts">
+                </div>
+                <h3>Audeck Engine 200</h3>
+                <span>$150.00</span>
+                <div class="cmn-btn">
+                    <a class="banner-btn-left" href="cart.html">
+                        Book Now
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3 mix peanut">
+            <div class="parts-item">
+                <div class="parts-top">
+                    <img src="~/Images/Dabeli.jpg" style="height: 142px; width: 142px" alt="Parts">
+                </div>
+                <h3>Audeck Meter 200</h3>
+                <span>$120.00</span>
+                <div class="cmn-btn">
+                    <a class="banner-btn-left" href="cart.html">
+                        Book Now
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3 mix peanut">
+            <div class="parts-item">
+                <div class="parts-top">
+                    <img src="~/Images/PeanutSoup.jpg" style="height: 142px; width: 142px" alt="Parts">
+                </div>
+                <h3>Audeck Light 200</h3>
+                <span>$110.00</span>
+                <div class="cmn-btn">
+                    <a class="banner-btn-left" href="cart.html">
+                        Book Now
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3 mix rice">
+            <div class="parts-item">
+                <div class="parts-top">
+                    <img src="~/Images/Sake.jpg" style="height: 142px; width: 142px" alt="Parts">
+                </div>
+                <h3>Audeck Fuel 200</h3>
+                <span>$130.00</span>
+                <div class="cmn-btn">
+                    <a class="banner-btn-left" href="cart.html">
+                        Book Now
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3 mix rice">
+            <div class="parts-item">
+                <div class="parts-top">
+                    <img src="~/Images/RiceVinegar.jpg" style="height: 142px; width: 142px" alt="Parts">
+                </div>
+                <h3>Audeck Belt 200</h3>
+                <span>$150.00</span>
+                <div class="cmn-btn">
+                    <a class="banner-btn-left" href="cart.html">
+                        Book Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>*@
+<!--</div>
+</section>-->

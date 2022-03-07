@@ -1,0 +1,318 @@
+﻿@model MVC_Food_Delivery.Models.Product_Master
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Adminpage.cshtml";
+}
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var message = "@ViewBag.emessage";
+
+        if (message != "") {
+            debugger;
+            //Swal.fire({
+            //    icon: 'error',
+            //    title: message,
+            //    //text: message,
+            //    //footer: '<a href="">Why do I have this issue?</a>'
+            //})
+
+
+            let timerInterval
+            Swal.fire({
+                title: message,
+                /* html: 'I will close in <b></b> milliseconds.',*/
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading()
+                    const b = Swal.getHtmlContainer().querySelector('b')
+                    timerInterval = setInterval(() => {
+                        b.textContent = Swal.getTimerLeft()
+                    }, 100)
+                },
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
+            }).then((result) => {
+                /* Read more about handling dismissals below */
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    console.log('I was closed by the timer')
+                }
+            })
+
+        }
+    });
+</script>
+<style>
+
+    .preview-img-upload .preview-img-holder {
+        width: 100px;
+        height: 100px;
+        display: none !important;
+        border: none !important;
+        /* position: relative;*/
+        margin-bottom: 14px;
+    }
+
+        .preview-img-upload .preview-img-holder .img-holder {
+            width: 100px;
+            height: 100px;
+            /* border-radius: 50%;*/
+            overflow: hidden;
+        }
+
+            .preview-img-upload .preview-img-holder .img-holder img {
+                width: 100%;
+                min-height: 100%;
+            }
+
+    .preview-img-upload.active .preview-img-holder {
+        display: inline-block !important;
+    }
+
+    .preview-img-upload.active .input-holder {
+        display: none;
+    }
+
+    .welcome-msg {
+        margin-top: 30px;
+        position: fixed;
+        left: -500%;
+    }
+
+        .welcome-msg .user-img {
+            width: 120px;
+            height: 120px;
+            display: inline-block;
+            border-radius: 50%;
+            overflow: hidden;
+            opacity: 0;
+            margin-top: 50px;
+        }
+
+            .welcome-msg .user-img img {
+                width: 100%;
+                min-height: 100%;
+            }
+
+        .welcome-msg .paragraph-message {
+            color: #fff;
+            font-size: 30px;
+            opacity: 0;
+            margin-top: 50px;
+        }
+
+            .welcome-msg .paragraph-message .username {
+                font-weight: 700;
+            }
+
+        .welcome-msg.active {
+            position: static;
+        }
+
+            .welcome-msg.active .user-img,
+            .welcome-msg.active .paragraph-message {
+                opacity: 1;
+                -webkit-transition: 1s;
+                transition: 1s;
+            }
+
+            .welcome-msg.active .user-img {
+                margin-top: 0;
+            }
+
+            .welcome-msg.active .paragraph-message {
+                margin-top: 15px;
+                -webkit-transition-delay: 0.8s;
+                transition-delay: 0.8s;
+            }
+
+
+
+    .photo {
+        /* position: relative;*/
+        width: 100px;
+        height: 100px;
+        /* border-radius: 50%;*/
+        background: rgb(223, 223, 223);
+        /* border: 13px solid rgb(223, 223, 223);
+        overflow: hidden !important;
+        transform: rotate(-1deg);*/
+    }
+
+        .photo:before {
+            /* position: absolute;
+            content: '';*/
+            width: 35px;
+            height: 35px;
+            /* top: 0px;
+            right: 20px;*/
+            /*border-radius: 50%;*/
+            background: #aaa;
+            /* border: 2px solid #fff;
+            transform: scale(0);
+            transition: 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            -webkit-animation: user-head 0.5s 0s forwards;
+            -moz-animation: user-head 0.5s 0s forwards;
+            animation: user-head 0.5s 0s forwards;*/
+        }
+
+        .photo:after {
+            /* position: absolute;
+            content: '';*/
+            width: 140px;
+            height: 220px;
+            /* top: 38px;
+            right: -32px;
+            border-radius: 50%;*/
+            background: #aaa;
+            /* border: 2px solid #fff;
+            transform: translateY(36px);
+            transition: 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            -webkit-animation: user-body 0.5s 0.3s forwards;
+            -moz-animation: user-body 0.5s 0.3s forwards;
+            animation: user-body 0.5s 0.3s forwards;*/
+        }
+</style>
+<script>
+    // $(document).ready(function () {
+
+    // preview Image Before Upload
+    function previewImageBeforeUpload() {
+        var element = $('.preview-img-upload');
+        var reader;
+
+        function readURL(input, selector) {
+            if (input.files && input.files[0]) {
+                reader = new FileReader();
+                reader.onload = function (e) {
+                    selector
+                        .parents('.preview-img-upload')
+                        .addClass('active')
+                        .find('.preview-img')
+                        .attr('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function removeImage() {
+            element
+                .find('.remove-image')
+                .click(function () {
+                    $(this)
+                        .parents('.preview-img-upload').removeClass('active').find('.preview-img').attr('src', '');
+                    $(this).parents('.preview-img-upload').find('input').val('');
+                });
+        }
+        removeImage();
+
+        $(document.body).on('change', '.preview-img-upload input', function () {
+            readURL(this, $(this));
+        });
+
+    }
+    previewImageBeforeUpload();
+
+    
+
+</script>
+
+<section class="content">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h4 class="box-title">Create Product</h4>
+                </div>
+                <div class="box-body">
+
+                    @using (Html.BeginForm("Create", "ProductMaster", FormMethod.Post,
+                    new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="text-info">Category Name</label>
+                                        @*<input type="text" id="CategoryName" name="CategoryName" class="form-control" placeholder="Category Name">*@
+                                        @Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="text-info">Product Name</label>
+                                        @*<input type="text" id="CategoryName" name="CategoryName" class="form-control" placeholder="Category Name">*@
+                                        @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="text-info">Product Details</label>
+                                        @*<input type="text" id="CategoryName" name="CategoryName" class="form-control" placeholder="Category Name">*@
+                                        @Html.EditorFor(model => model.ProductDetails, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ProductDetails, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="text-info">Product Price</label>
+                                        @*<input type="text" id="CategoryName" name="CategoryName" class="form-control" placeholder="Category Name">*@
+                                        @Html.EditorFor(model => model.ProductPrice, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ProductPrice, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="text-info">Product Image</label>
+
+                                        @*<input id="file" name="file" type="file" />*@
+                                        <div class="upload-image preview-img-upload">
+
+                                            <div class="preview-img-holder">
+                                                <div class="img-holder"><img src="" alt="image" draggable="false" class="preview-img" /></div>
+                                            </div>
+                                            <label class="input-holder">
+                                                <div class="photo"></div>
+                                                <input type="file" id="file" name="file" accept="img/*" class="hide" />
+                                            </label>
+                                        </div>
+                                        <!--<label class="text-info">Product Image</label>-->
+                                        @*<input type="text" id="CategoryName" name="CategoryName" class="form-control" placeholder="Category Name">*@
+                                        @*@Html.EditorFor(model => model.ProductImage, new { htmlAttributes = new { @class = "form-control" } })*@
+                                        @Html.ValidationMessageFor(model => model.ProductImage, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions mt-10">
+                            <input type="submit" value="Create" class="btn btn-outline btn-success " />
+                            @*<button type="submit" class="btn btn-outline btn-success"> <i class="fa fa-check"></i> Create</button>&nbsp;*@
+                            <a href="@Url.Action("Index", "ProductMaster")" class="btn btn-outline btn-danger">Back To List</a>
+                        </div>
+                        @*</form>*@
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,116 @@
+﻿@model MVC_Food_Delivery.ViewModels.LogintypeViewModel
+@{
+    ViewBag.Title = "Signin";
+}
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+@*<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">*@
+
+
+
+
+
+
+<script>
+
+
+    $(document).ready(function () {
+
+        var message = "@TempData["emessage"]";
+
+        if (message != "") {
+
+            Swal.fire({
+                icon: 'error',
+                title: message,
+                //text: message,
+                //footer: '<a href="">Why do I have this issue?</a>'
+            })
+        }
+
+        var message = "@TempData["insert"]";
+
+        if (message != "") {
+
+            Swal.fire({
+
+                icon: 'success',
+                title: message,
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
+    });
+
+</script>
+
+<div class="page-title-area">
+    <img src="~/Images/2.jpg" style="height: 323px; width: 540px" alt="Title">
+    <div class="container">
+        <div class="page-title-content">
+            <h2>Sign In</h2>
+            <ul>
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+                <li>
+                    <i class='bx bx-chevron-right'></i>
+                </li>
+                <li>Sign In</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<div class="login-area ptb-100">
+    <div class="container">
+        <div class="login-item">
+            <form action="@Url.Action("Signin", "Login")" method="POST">
+
+                <div class="form-group ">
+                    <label>Login Type:</label>
+                    @*@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })*@
+                    @Html.DropDownList("UserID", null, htmlAttributes: new { @class = "form-control " })
+                    @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "text-danger" })
+
+                    @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group ">
+                    <label>Email:</label>
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Email" } })
+
+                    @*<input type="text" id="Email" name="Email" class="form-control" placeholder="Email" required>*@
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label>Password:</label>
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Password" } })
+                    @*<input type="password" id="Password" name="Password" class="form-control" placeholder="Password" required>*@
+
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn login-btn">Login</button>
+                </div>
+            </form>
+            <span><a href="@Url.Action("EnterEmail", "Login")">Forget Password?</a></span>
+            <hr />
+            <div class="cmn-btn text-center">
+                <a class="banner-btn-center" href="@Url.Action("Signup", "Login")">
+                    <i class='bx bxs-user-plus'></i>
+                    Create New Account
+                </a>
+
+            </div>
+            @*<span><a href="@Url.Action("Signup", "Login")">Register Now</a></span>*@
+        </div>
+    </div>
+</div>
+

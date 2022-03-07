@@ -1,0 +1,79 @@
+﻿@model IEnumerable<MVC_Food_Delivery.Models.Add_To_Cart_Master>
+
+@{
+    ViewBag.Title = "ShowAddToCart";
+}
+
+<section class="cart-area ptb-100">
+    <div class="container">
+        <div class="cart-wrap">
+            <table class="table">
+                <thead class="thead">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CustomerID)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ProductID)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+               
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductID)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Remove", "Remove", new { id = item.AddToCartID }) |
+
+                        </td>
+                    </tr>
+                }
+
+            </table>
+            <div class="shop-back">
+                <a href="#">Go for Order?</a>
+            </div>
+            <div class="total-shopping">
+                <h2>Total Order</h2>
+                <h3>Total: <span>$510.00</span></h3>
+                <a href="checkout.html">Checkout Items</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@*<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CustomerID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CustomerID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductID)
+        </td>
+        <td>
+            @Html.ActionLink("Remove", "Remove", new { id=item.AddToCartID }) |
+           
+        </td>
+    </tr>
+}
+
+</table>*@

@@ -1,0 +1,88 @@
+﻿@model MVC_Food_Delivery.ViewModels.CheckoutViewModel
+@{
+    ViewBag.Title = "Checkout";
+}
+
+
+
+@if (Model != null)
+{
+    if (Model.CartProducts != null && Model.CartProducts.Count > 0)
+    {
+        <section class="cart-area ptb-100">
+            <div class="container">
+                <div class="cart-wrap">
+                    <table class="table">
+                        <thead class="thead">
+                            <tr>
+                                <th>
+                                    Product Name
+                                </th>
+                                <th>
+                                    Product Price
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        @foreach (var Product in Model.CartProducts)
+                        {
+                            <tr>
+                                <td>
+                                    @Product.ProductName
+                                </td>
+                                <td class="totalprices">
+                                    @Product.ProductPrice  
+                                </td>
+                                <td>
+                                    <a href="#">
+                                        <i class='bx bx-x'></i>
+                                    </a>
+                                    @*@Html.ActionLink("Remove", "Remove", new { id = Product.ProductID })*@
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+                    <div class="shop-back">
+                        <a href="#">Go for Order?</a>
+                    </div>
+                    <div class="total-shopping">
+                        <h2>Total Order</h2>
+                       
+                       
+                        <h3>Total: <span id="total"></span></h3>
+                        <a href="#">Checkout Items</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    else
+    {
+        <div> No Poducts in Cart</div>
+    }
+}
+
+
+
+<script>
+    $(document).ready(function () {
+        debugger;
+        var total = [];
+       var price = [];
+        price = $(".totalprices").add();
+        for (var i = 0; i < price.length; i++) {
+            var k = price[i].innerText
+            total.push(k);
+       
+        }
+
+        var totals = 0;
+        for (var i = 0; i < total.length; i++) {
+            totals += total[i] << 0;
+        }
+        $("#total").text(totals);
+
+    });
+</script>

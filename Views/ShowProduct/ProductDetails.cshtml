@@ -1,0 +1,117 @@
+﻿@model MVC_Food_Delivery.Models.Product_Master
+@{
+    ViewBag.Title = "ProductDetails";
+}
+
+<section class="quality-area quality-area-four pt-100">
+    <div class="quality-shape">
+    </div>
+    <div class="container-fluid p-0">
+        <div class="row m-0 align-items-center">
+            <div class="col-lg-6 p-0">
+                <div class="quality-img">
+                    <img src="~/img/@Html.DisplayFor(model => model.ProductImage)" style="height:550px;width:850px" alt="Quality">
+
+                </div>
+            </div>
+            <div class="col-lg-6 p-0">
+                <div class="quality-content">
+
+                    <div class="section-title">
+
+                        @Html.HiddenFor(model => model.ProductID)
+                        <h2> @Html.DisplayFor(model => model.ProductName) </h2>
+                        <br />
+                        <h3>Price :   ₹@Html.DisplayFor(model => model.ProductPrice)</h3>
+                        <p>Product Details :  @Html.DisplayFor(model => model.ProductDetails)</p>
+                    </div>
+
+                    <br />
+                    <div class="cmn-btn">
+                        <a href="#" id="back">Back To List</a>
+                        <!--<a class="banner-btn-left" href="#" onclick="GoBack"--> @*href="@Url.Action("Index", "ShowProduct")"*@
+                            @*Back To List
+                        </a>-->*@
+                        <a class="addtocart banner-btn-left" data-id="@Html.DisplayFor(model => model.ProductID)">
+                            Add to Cart
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+           
+            $("#back").on('click', function () {
+                      
+                window.history.back();
+            });
+        });
+    </script>
+
+
+
+
+
+    <script>
+
+
+
+        var Products = [];
+        $(document).ready(function () {
+            $(".addtocart").click(function () {
+
+                var ProductID = $(this).attr('data-id');
+
+                Products.push(ProductID);
+
+                $.cookie('cartProduct', Products.join('-'), { path: '/' });
+
+                //Swal.fire(
+                //    'Add To Cart',
+                //    '',
+                //    'success'
+                //)
+                Swal.fire({
+
+                    icon: 'success',
+                    title: "Add To Cart",
+                    showConfirmButton: false,
+                    timer: 1000
+                })
+
+                //var username = '<%= Session["UserName"] %>';
+                //alert(username);
+                debugger;
+                /* var UserID = 5;*/
+                var add_To_Cart_Master = {};
+                /* add_To_Cart_Master.CustomerID = UserID;*/
+                add_To_Cart_Master.ProductID = ProductID;
+
+                $.ajax({
+                    url: '/ShowProduct/CartProducts',
+                    type: 'POST',
+                    data: JSON.stringify(add_To_Cart_Master),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        if (data.status === 'OK') {
+
+                            setTimeout(function () {
+                                window.location.href = "https://localhost:44354/ShowProduct";
+                            }, 500);
+
+
+                        }
+                        else {
+                            alert("The status cannot be updated at this time");
+                        }
+                    }
+
+                });
+            });
+        });
+    </script>
+
+</section>

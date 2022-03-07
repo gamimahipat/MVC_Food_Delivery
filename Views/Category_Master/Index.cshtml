@@ -1,0 +1,192 @@
+﻿@model IEnumerable<MVC_Food_Delivery.Models.Category_Master>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Adminpage.cshtml";
+}
+
+<script>
+
+
+    $(document).ready(function () {
+
+        var message = "@TempData["ssmessage"]";
+
+        if (message != "") {
+            Swal.fire({
+
+                icon: 'success',
+                title: message,
+                showConfirmButton: false,
+                timer: 1500
+            })
+
+
+
+        }
+
+
+        $('.deleteBtn').on("click", function () {
+
+            debugger;
+
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    debugger;
+                    var id = $(this).attr("data-id");
+                  
+
+                    $.ajax({
+                        url: "/Category_Master/Delete/" + id,
+                        type: "POST",
+                        data: JSON.stringify(id),
+                        dataType: 'json',
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            if (data.status === 'OK') {
+
+                                
+                               
+                                    swalWithBootstrapButtons.fire(
+                                        'Deleted!',
+                                        'Your file has been deleted.',
+                                        'success'
+                                    )
+                          
+                    setTimeout(function () {
+                                window.location.href = "https://localhost:44354/Category_Master/Index";
+
+                    }, 700);
+
+                            }
+                            else {
+                                alert("The status cannot be updated at this time");
+                            }
+                        }
+                    });
+
+
+                   
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        '',
+                        'error'
+                    )
+                }
+            })
+
+
+        });
+
+
+    });
+
+</script>
+
+<div class="row">
+
+    <div class="col-12">
+
+        <div class="box">
+            <div class="box-header with-border">
+                <a href="@Url.Action("Create", "Category_Master")" class="btn btn-outline btn-info">Create Category</a>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table id="productorder" class="table" style="width:100%">
+                        <thead class="bg-info text-center">
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CategoryName)
+                                </th>
+
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-cyan text-center">
+                            @foreach (var item in Model)
+                            {
+
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CategoryName)
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("Edit", "Category_Master", new { id = item.CategoryID })" class="btn btn-icon-circle btn-info" data-toggle="tooltip" data-original-title="Edit">
+                                            <i class="ti-marker-alt"></i>
+                                        </a>
+                                        <a href="javascript:void(0)" data-id="@item.CategoryID" class="deleteBtn btn btn-icon-circle btn-danger " data-original-title="Delete" data-toggle="tooltip">
+                                            <i class="ti-trash"></i>
+                                        </a>
+                                        @*@Html.ActionLink("Edit", "Edit", new { id = item.ProductID }) |
+                                            @Html.ActionLink("Details", "Details", new { id = item.ProductID }) |
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.ProductID })*@
+                                    </td>
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+
+</div>
+
+
+
+
+
+
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryName)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.CategoryID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.CategoryID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.CategoryID })
+                </td>
+            </tr>
+        }
+
+    </table>*@

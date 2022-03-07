@@ -1,0 +1,76 @@
+﻿@model IEnumerable<MVC_Food_Delivery.Models.Payment_Master>
+
+@{
+    ViewBag.Title = "PaymentList";
+    Layout = "~/Views/Shared/_Adminpage.cshtml";
+}
+
+
+
+<div class="row">
+
+    <div class="col-12">
+
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Payment List</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table id="productorder" class="table" style="width:100%">
+                        <thead class="bg-info text-center">
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Order_Master.OrderID)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.PaymentDate)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.PaymentType)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.TotalPrice)
+                                </th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody class="bg-cyan text-center">
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Order_Master.OrderID)
+                                </td>
+                                <td>
+                                    @item.PaymentDate.Value.ToString("dd-MM-yyyy hh:mm")
+                                    @*@Html.DisplayFor(modelItem => item.PaymentDate.Value.ToString("d"))*@
+                                    @*@item.PaymentDate.Value.ToShortDateString("dd-MM-yyyy")*@
+                                    @*@Html.DisplayFor(modelItem => item.PaymentDate)*@
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PaymentType)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TotalPrice)
+                                </td>
+
+
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+
+</div>
+
+
+
+

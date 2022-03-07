@@ -1,0 +1,287 @@
+﻿@model MVC_Food_Delivery.Models.Product_Master
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Adminpage.cshtml";
+}
+
+
+
+<style>
+
+    .preview-img-upload .preview-img-holder {
+        width: 100px;
+        height: 100px;
+        display: none !important;
+        border: none !important;
+        /* position: relative;*/
+        margin-bottom: 14px;
+    }
+
+        .preview-img-upload .preview-img-holder .img-holder {
+            width: 100px;
+            height: 100px;
+            /* border-radius: 50%;*/
+            overflow: hidden;
+        }
+
+            .preview-img-upload .preview-img-holder .img-holder img {
+                width: 100%;
+                min-height: 100%;
+            }
+
+    .preview-img-upload.active .preview-img-holder {
+        display: inline-block !important;
+    }
+
+    .preview-img-upload.active .input-holder {
+        display: none;
+    }
+
+    .welcome-msg {
+        margin-top: 30px;
+        position: fixed;
+        left: -500%;
+    }
+
+        .welcome-msg .user-img {
+            width: 120px;
+            height: 120px;
+            display: inline-block;
+            border-radius: 50%;
+            overflow: hidden;
+            opacity: 0;
+            margin-top: 50px;
+        }
+
+            .welcome-msg .user-img img {
+                width: 100%;
+                min-height: 100%;
+            }
+
+        .welcome-msg .paragraph-message {
+            color: #fff;
+            font-size: 30px;
+            opacity: 0;
+            margin-top: 50px;
+        }
+
+            .welcome-msg .paragraph-message .username {
+                font-weight: 700;
+            }
+
+        .welcome-msg.active {
+            position: static;
+        }
+
+            .welcome-msg.active .user-img,
+            .welcome-msg.active .paragraph-message {
+                opacity: 1;
+                -webkit-transition: 1s;
+                transition: 1s;
+            }
+
+            .welcome-msg.active .user-img {
+                margin-top: 0;
+            }
+
+            .welcome-msg.active .paragraph-message {
+                margin-top: 15px;
+                -webkit-transition-delay: 0.8s;
+                transition-delay: 0.8s;
+            }
+
+
+
+    .photo {
+        /* position: relative;*/
+        width: 100px;
+        height: 100px;
+        /* border-radius: 50%;*/
+        background: rgb(223, 223, 223);
+        /* border: 13px solid rgb(223, 223, 223);
+        overflow: hidden !important;
+        transform: rotate(-1deg);*/
+    }
+
+        .photo:before {
+            /* position: absolute;
+            content: '';*/
+            width: 35px;
+            height: 35px;
+            /* top: 0px;
+            right: 20px;*/
+            /*border-radius: 50%;*/
+            background: #aaa;
+            /* border: 2px solid #fff;
+            transform: scale(0);
+            transition: 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            -webkit-animation: user-head 0.5s 0s forwards;
+            -moz-animation: user-head 0.5s 0s forwards;
+            animation: user-head 0.5s 0s forwards;*/
+        }
+
+        .photo:after {
+            /* position: absolute;
+            content: '';*/
+            width: 140px;
+            height: 220px;
+            /* top: 38px;
+            right: -32px;
+            border-radius: 50%;*/
+            background: #aaa;
+            /* border: 2px solid #fff;
+            transform: translateY(36px);
+            transition: 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            -webkit-animation: user-body 0.5s 0.3s forwards;
+            -moz-animation: user-body 0.5s 0.3s forwards;
+            animation: user-body 0.5s 0.3s forwards;*/
+        }
+</style>
+<script>
+    // $(document).ready(function () {
+
+    // preview Image Before Upload
+    function previewImageBeforeUpload() {
+        var element = $('.preview-img-upload');
+        var reader;
+
+        function readURL(input, selector) {
+            if (input.files && input.files[0]) {
+                reader = new FileReader();
+                reader.onload = function (e) {
+                    selector
+                        .parents('.preview-img-upload')
+                        .addClass('active')
+                        .find('.preview-img')
+                        .attr('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function removeImage() {
+            element
+                .find('.remove-image')
+                .click(function () {
+                    $(this)
+                        .parents('.preview-img-upload').removeClass('active').find('.preview-img').attr('src', '');
+                    $(this).parents('.preview-img-upload').find('input').val('');
+                });
+        }
+        removeImage();
+
+        $(document.body).on('change', '.preview-img-upload input', function () {
+            readURL(this, $(this));
+        });
+
+    }
+    previewImageBeforeUpload();
+
+
+
+</script>
+
+
+
+<section class="content">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h2> Edit Product</h2>
+                </div>
+                <div class="box-body">
+
+                    @*<form action="@Url.Action("Create", "ProductMaster")" method="POST" class="form-element">*@
+                    @using (Html.BeginForm("Edit", "ProductMaster", FormMethod.Post,
+                    new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.HiddenFor(model => model.ProductID)
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.CategoryID, "CategoryID", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control" })
+                                            @*@Html.DropDownList("CategoryID", new SelectList(selectedValue, "CategoryID", "CategoryName"), htmlAttributes: new { @class = "form-control" ,@id= "CategoryID" })*@
+                                            @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ProductName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ProductDetails, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.ProductDetails, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.ProductDetails, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ProductPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.ProductPrice, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.ProductPrice, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ProductImage, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                                        <div class="col-md-10">
+                                            <div class="upload-image preview-img-upload">
+
+                                                <div class="preview-img-holder">
+                                                    <div class="img-holder"><img src="~/img/@Model.ProductImage" alt="image" draggable="false" class="preview-img" /></div>
+                                                </div>
+                                                <label class="input-holder">
+                                                    <img class="photo" src="~/img/@Model.ProductImage" />
+                                                    <input type="file" id="file" name="file" accept="img/*" class="hide" />
+                                                </label>
+                                            </div>
+                                            @*<input id="file" name="file" type="file" />
+                                                <img src="~/img/@Model.ProductImage" style="height:80px;width:80px" />*@
+                                            @*@Html.EditorFor(model => model.ProductImage, new { htmlAttributes = new { @class = "form-control" } })*@
+                                            @*@Html.ValidationMessageFor(model => model.ProductImage, "", new { @class = "text-danger" })*@
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-actions mt-10">
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Update" class="btn btn-outline btn-success" />
+                                    <a href="@Url.Action("Index", "ProductMaster")" class="btn btn-outline btn-danger">Back To List</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+
+

@@ -1,0 +1,144 @@
+﻿@model IEnumerable<MVC_Food_Delivery.ViewModels.CoockOrderViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    $(document).ready(function () {
+        var message = "@TempData["smessage"]";
+
+        if (message != "") {
+
+            //Swal.fire(
+            //     message ,
+            //    '',
+            //    'success'
+            //)
+
+            Swal.fire({
+
+                icon: 'success',
+                title: message,
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
+
+
+
+        var message = "@TempData["ssmessage"]";
+
+        if (message != "") {
+            Swal.fire({
+
+                icon: 'success',
+                title: message,
+                showConfirmButton: false,
+                timer: 1500
+            })
+
+
+
+        }
+    });
+</script>
+
+
+<section class="cart-area ptb-100">
+    <div class="container">
+        <div class="cart-wrap">
+            <table class="table" id="tbl">
+                <thead class="thead">
+                    <tr>
+
+                        <th class="table-head" scope="col">CustomerName</th>
+                        <th class="table-head" scope="col">OrderDate</th>
+                        <th class="table-head" scope="col">Product Name</th>                      
+                        <th class="table-head" scope="col">PaymentStatus</th>
+                        <th class="table-head" scope="col">CoockStatus</th>
+
+                        <th class="table-head" scope="col">Action</th>
+                    </tr>
+                </thead>
+                @foreach (var Order in Model.Select(x => x.order_Master).Distinct())
+                {
+                    <tr>
+                        <td>
+                            @Order.Customer_Master.CustomerName
+                        </td>
+                        <td>
+                         
+                            @Order.OrderDate.Value.ToShortDateString()
+                        </td>
+
+                        <td>
+                            @foreach (var Pro in Model.Where(x => Order.OrderID == x.OrderIDNew))
+                            {
+                                @Html.DisplayFor(modelItem => Pro.ProductNameNew)
+                               <span>,</span>
+                            }
+                        </td>
+                       
+                        <td>
+                            @Html.DisplayFor(modelItem => Order.PaymentStatus)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Order.CoockStatus)
+                        </td>
+                        <td>
+                            @*@Html.ActionLink("Edit", "Edit", new { id = item.OrderID })*@
+                            <a href="@Url.Action("Edit", "Coock", new { id = Order.OrderID })" class="deleteBtn btn btn-icon-circle " data-original-title="Delete" data-toggle="tooltip">
+                                <i class="fa fa-edit fa-2x"></i>
+                            </a>
+                        </td>
+                    </tr>
+
+                }
+
+
+
+                @*@foreach (var item in Model)*@
+                @*{
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.order_Master.Customer_Master.CustomerName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.order_Master.OrderDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.order_Master.TotalPrice)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.order_Master.PaymentStatus)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.order_Master.CoockStatus)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.order_Master.DeliveryStatus)
+                            </td>
+
+                            <td>-->
+
+                                @Html.ActionLink("Edit", "Edit", new { id = item.OrderID })
+                                <a href="@Url.Action("Edit", "Coock", new { id = item.order_Master.OrderID })"  class="deleteBtn btn btn-icon-circle " data-original-title="Delete" data-toggle="tooltip">
+                                    <i class="fa fa-edit fa-2x"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }*@
+            </table>
+
+        </div>
+    </div>
+</section>
+
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+
+
+
+
+

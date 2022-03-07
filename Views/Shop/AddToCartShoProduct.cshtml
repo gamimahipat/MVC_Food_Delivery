@@ -1,0 +1,340 @@
+﻿@*@model IEnumerable<MVC_Food_Delivery.Models.Add_To_Cart_Master>*@
+@model IEnumerable<MVC_Food_Delivery.ViewModels.CartViewModel>
+
+@{
+    ViewBag.Title = "AddToCartShoProduct";
+}
+
+<section class="cart-area ptb-100">
+    <div class="container">
+        <div class="cart-wrap">
+            <table class="table" id="tbl">
+                <thead class="thead">
+                    <tr>
+
+                        <th class="table-head" scope="col">Product Image</th>
+                        <th class="table-head" scope="col">Product Name</th>
+                        <th class="table-head" scope="col">Product Price</th>
+                        <th class="table-head" scope="col">Qty.</th>
+                        <th class="table-head" scope="col">Product Total Price</th>
+                        <th class="table-head" scope="col">Remove</th>
+                    </tr>
+                </thead>
+
+
+                @foreach (var item in Model)
+                {
+                    <tr class="cartpage">
+
+                        <td><img src="~/img/@item.Product_Master.ProductImage" style="height:50px;width:50px"></td>
+
+                        <td>@item.Product_Master.ProductName</td>
+                        <td class="product-pricee">
+
+                            @item.Product_Master.ProductPrice
+
+                        </td>
+                        <td class="cart-product-quantity" width="130px">
+                            <input type="hidden" class="product_id" value="@item.Product_Master.ProductID" />
+                            <input type="hidden" class="product_price" value="@item.Product_Master.ProductPrice" />
+                            <input type="hidden" class="AddToCartID" value="@item.Add_To_Cart_Master.AddToCartID" />
+                            <div class="input-group quantity">
+                                <div class="input-group-prepend decrement-btn changeQuantity" style="cursor: pointer">
+                                    <span class="input-group-text">-</span>
+                                </div>
+
+                                <input type="text" class="qty-input form-control" maxlength="2" max="10" readonly value="@item.Add_To_Cart_Master.Quantity">
+
+                                <div class="input-group-append increment-btn changeQuantity" style="cursor: pointer">
+                                    <span class="input-group-text">+</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="totalprices">
+
+                            @String.Format("{0}", Convert.ToDouble(@item.Add_To_Cart_Master.Quantity) * Convert.ToDouble(@item.Product_Master.ProductPrice))
+
+                        </td>
+                        <td>
+                            <a href="@Url.Action("DeleteAddtoCartProduct", "Shop",new {AddToCartID=@item.Add_To_Cart_Master.AddToCartID})">
+                                @*<i class='bx bx-x'></i>*@
+
+                                <i class="fa-regular fa fa-trash fa-2x "></i>
+                                @*<span class="iconify text-danger fa-2x" data-icon="ep:delete-filled"></span>*@
+                            </a>
+                        </td>
+                    </tr>
+
+                }
+
+            </table>
+
+           
+            <div class="total-shopping">
+                <h2>Total Order</h2>
+                <div class="row">
+                    <h3>Total:<span id="total"></span>₹</h3>
+                </div>
+                <a href="@Url.Action("Index", "ShowProduct")">Back To Shop</a>
+                <a id="checkoutItem">Checkout Items</a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<script>
+    function ddd() {
+        var total = [];
+        var price = [];
+        price = $(".totalprices").add();
+        for (var i = 0; i < price.length; i++) {
+            var k = price[i].innerText
+            total.push(k);
+            $("#total").text(totals);
+        }
+
+        var totals = 0;
+        for (var i = 0; i < total.length; i++) {
+            totals += total[i] << 0;
+        }
+        $("#total").text(totals);
+    }
+</script>
+
+
+
+<script>
+
+    $(document).ready(function () {
+
+        debugger;
+
+        var total = [];
+        var price = [];
+        price = $(".totalprices").add();
+        for (var i = 0; i < price.length; i++) {
+            var k = price[i].innerText
+            total.push(k);
+            $("#total").text(totals);
+        }
+
+        var totals = 0;
+        for (var i = 0; i < total.length; i++) {
+            totals += total[i] << 0;
+        }
+        $("#total").text(totals);
+
+
+
+
+
+
+
+
+
+
+
+       var message = "@TempData["dmessage"]";
+
+        if (message != "") {
+            Swal.fire({
+
+                icon: 'success',
+                title: message,
+                showConfirmButton: false,
+                timer: 1500
+            })
+            //Swal.fire(
+            //     message ,
+            //    '',
+            //    'success'
+            //)
+        }
+
+        var x = document.getElementById("tbl").rows.length;
+        if (x>1) {
+
+        $("#checkoutItem").on('click', function () {
+       /* $("checkoutItem").click(function () {*/
+            debugger;
+            var p = $("#total").text();
+
+            var order_Master = {};
+            order_Master.TotalPrice = p;
+
+            $.ajax({
+                url: "/Shop/SaveOrder",
+                type: "POST",
+                data: JSON.stringify(order_Master),
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                 success: function (data) {
+                     if (data.status === 'OK') {
+
+
+                            window.location.href = "https://localhost:44354/Payment/Index";
+
+
+
+                    }
+                    else {
+                        alert("The status cannot be updated at this time");
+                    }
+                }
+            });
+        });
+        }
+        else {
+
+            $("#checkoutItem").on('click', function () {
+                Swal.fire({
+                    icon: 'error',
+                    title: "Please Product Selected...",
+
+                })
+            });
+
+        }
+
+
+
+        $('.increment-btn').click(function (e) {
+
+
+            debugger;
+
+                e.preventDefault();
+                var incre_value = $(this).parents('.quantity').find('.qty-input').val();
+                var value = parseInt(incre_value, 10);
+                value = isNaN(value) ? 0 : value;
+                if (value < 10) {
+                    value++;
+                    $(this).parents('.quantity').find('.qty-input').val(value);
+
+
+                    var pprieces = $(this).parents('.cart-product-quantity').find(".product_price").val();
+                    var AddToCartID = $(this).parents('.cart-product-quantity').find(".AddToCartID").val();
+
+                    var add_To_Cart_Master = {};
+                    add_To_Cart_Master.Quantity = value;
+                    add_To_Cart_Master.AddToCartID = AddToCartID;
+
+                    //
+                    var selectors = $(this).closest('tr');
+
+                    var newprice = (pprieces * value);
+                    selectors.find('.totalprices').text(newprice);
+
+
+                    var sum = 0;
+                    $('tr').find('.totalprices').each(function () {
+                        var combat = $(this).text();
+
+                            sum += parseFloat(combat);
+
+                    });
+
+                    $('#total').html(sum);
+
+
+
+
+                    //
+                    $.ajax({
+                        url: '/ShowProduct/QuantityAdd',
+                        type: 'POST',
+                        data: JSON.stringify(add_To_Cart_Master),
+                        dataType: 'json',
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+
+                            if (data.status === 'OK') {
+
+
+
+                                //setTimeout(function () {
+                                //    /*window.location.href = data.Url;*/
+                                ////    window.location.href = "https://localhost:44354/Shop/AddToCartShoProduct";
+                                //}, 0);
+
+
+                            }
+                            else {
+                                alert("The status cannot be updated at this time");
+                            }
+                        }
+
+                    });
+
+
+
+                }
+
+         });
+
+        $('.decrement-btn').click(function (e) {
+            debugger;
+                e.preventDefault();
+                var decre_value = $(this).parents('.quantity').find('.qty-input').val();
+                var value = parseInt(decre_value, 10);
+                value = isNaN(value) ? 0 : value;
+                if (value > 1) {
+                    value--;
+                     $(this).parents('.quantity').find('.qty-input').val(value);
+
+
+                    var pprieces = $(this).parents('.cart-product-quantity').find(".product_price").val();
+
+                    var AddToCartID = $(this).parents('.cart-product-quantity').find(".AddToCartID").val();
+
+                    var add_To_Cart_Master = {};
+                    add_To_Cart_Master.Quantity = value;
+                    add_To_Cart_Master.AddToCartID = AddToCartID;
+
+                    var selectors = $(this).closest('tr');
+
+                    var newprice = (pprieces * value);
+                    selectors.find('.totalprices').text(newprice);
+
+                    var sum = 0;
+                    $('tr').find('.totalprices').each(function () {
+                        var combat = $(this).text();
+
+                        sum += parseFloat(combat);
+
+                    });
+
+                    $('#total').html(sum);
+
+                    $.ajax({
+                        url: '/ShowProduct/QuantityAdd',
+                        type: 'POST',
+                        data: JSON.stringify(add_To_Cart_Master),
+                        dataType: 'json',
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+                            if (data.status === 'OK') {
+
+                                //setTimeout(function () {
+                                //    window.location.href = "https://localhost:44354/Shop/AddToCartShoProduct";
+                                //}, 0);
+
+
+
+                            }
+                            else {
+                                alert("The status cannot be updated at this time");
+                            }
+                        }
+
+                    });
+
+                }
+        });
+
+
+
+
+    });
+</script>

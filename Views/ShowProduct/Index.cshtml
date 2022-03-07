@@ -1,0 +1,184 @@
+﻿@model IEnumerable<MVC_Food_Delivery.Models.Product_Master>
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+<script>
+    $(document).ready(function () {
+        var message = "@TempData["smessage"]";
+
+        if (message != "") {
+
+            //Swal.fire(
+            //     message ,
+            //    '',
+            //    'success'
+            //)
+
+            Swal.fire({
+
+                icon: 'success',
+                title: message,
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
+
+
+
+
+        var message = "@TempData["ssmessage"]";
+
+        if (message != "") {
+
+            //Swal.fire(
+            //     message ,
+            //    '',
+            //    'success'
+            //)
+
+            Swal.fire({
+
+                icon: 'success',
+                title: message,
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
+    });
+</script>
+
+<script>
+   $(document).ready(function () {
+
+        var message = "@TempData["ssmessage"]";
+
+        if (message != "") {
+        Swal.fire({
+
+        icon: 'success',
+        title: message,
+        showConfirmButton: false,
+        timer: 1500
+        })
+
+
+
+        }
+   });
+
+</script>
+
+
+<section class="parts-area pt-100 pb-70">
+    <div class="container">
+        <div class="section-title">
+            <h2>PRODUCTS</h2>
+        </div>
+        <div class="sorting-menu">
+            <ul>
+                <li class="filter active" data-filter="all">ALL</li>
+                @foreach (var Category in Model.Select(x => x.Category_Master).Distinct())
+                {
+
+                    <li class="filter" data-filter=".@Category.CategoryID">@Category.CategoryName</li>
+                }
+                @*<li class="filter active" data-filter="all">ALL</li>
+                    <li class="filter" data-filter=".1">APETIZER</li>
+                    <li class="filter" data-filter=".2">DESERT</li>
+                    <li class="filter" data-filter=".3">PEANUTS</li>
+                    <li class="filter" data-filter=".4">RICE</li>
+                    <li class="filter" data-filter=".5">SWEET</li>*@
+            </ul>
+        </div>
+        <div id="Container" class="row">
+            @foreach (var category in Model.Select(x => x.Category_Master).Distinct())
+            {
+                foreach (var subcategory in Model.Where(x => category.CategoryID == x.CategoryID))
+                {
+
+                    <div class="col-sm-6 col-lg-3 mix @category.CategoryID">
+                        <div class="parts-item">
+                            <div class="parts-top">
+                                <img src="~/img/@Html.DisplayFor(modelItem => subcategory.ProductImage)" style="height: 142px; width: 142px" alt="Parts">
+                            </div>
+                            <h3>@Html.DisplayFor(modelItem => subcategory.ProductName)</h3>
+                            <span>₹@Html.DisplayFor(modelItem => subcategory.ProductPrice)</span>
+                            <div class="cmn-btn">
+                                <a class="banner-btn-left" href="@Url.Action("ProductDetails", "ShowProduct", new { id = subcategory.ProductID })">
+                                    Details
+                                </a>
+                                <a class="addtocart banner-btn-left" data-id="@Html.DisplayFor(modelItem => subcategory.ProductID)">
+                                    Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+</section>
+
+
+
+<script>
+
+    var Products = [];
+    $(document).ready(function () {
+        $(".addtocart").click(function () {
+
+            var ProductID = $(this).attr('data-id');
+
+            Products.push(ProductID);
+
+            $.cookie('cartProduct', Products.join('-'), { path: '/' });
+
+            //Swal.fire(
+            //    'Add To Cart',
+            //    '',
+            //    'success'
+            //)
+            Swal.fire({
+
+                icon: 'success',
+                title: "Add To Cart",
+                showConfirmButton: false,
+                timer: 1000
+            })
+
+            //var username = '<%= Session["UserName"] %>';
+            //alert(username);
+            debugger;
+            /* var UserID = 5;*/
+            var add_To_Cart_Master = {};
+            /* add_To_Cart_Master.CustomerID = UserID;*/
+            add_To_Cart_Master.ProductID = ProductID;
+
+            $.ajax({
+                url: '/ShowProduct/CartProducts',
+                type: 'POST',
+                data: JSON.stringify(add_To_Cart_Master),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    if (data.status === 'OK') {
+
+                        setTimeout(function () {
+                            window.location.href = "https://localhost:44354/ShowProduct";
+                        }, 500);
+                        @*debugger;
+                        $.session('count', @Session["count"]);*@
+                    }
+                    else {
+                        alert("The status cannot be updated at this time");
+                    }
+                }
+
+            });
+        });
+    });
+</script>

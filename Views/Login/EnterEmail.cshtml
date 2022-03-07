@@ -1,0 +1,69 @@
+﻿@model MVC_Food_Delivery.Models.Customer_Master
+@{
+    ViewBag.Title = "EnterEmail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    $(document).ready(function () {
+
+        var message = "@TempData["inserterr"]";
+
+
+        if (message != "") {
+
+            Swal.fire({
+                icon: 'error',
+                title: message,
+
+            })
+        }
+
+    });
+
+</script>
+
+
+<div class="page-title-area">
+    <img src="~/Images/2.jpg" style="height: 300px; width: 540px" alt="Title">
+    <div class="container">
+        <div class="page-title-content">
+            <h2>Find Account</h2>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="login-area ptb-100">
+    <div class="container">
+        <div class="login-item">
+            <form action="@Url.Action("EmailCheck", "Login")" method="POST">
+                <h3><b>Find Your Account</b></h3>
+                <hr />
+                <div class="form-group ">
+                    
+                    <label>Please enter your email address to search for your account.</label>
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Email" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+
+
+                <div class="text-center">
+                    <button type="submit" class="btn login-btn">SEND OTP</button>
+                </div>
+            </form>
+            <span><a href="@Url.Action("Signin", "Login")" class="text-left">Back To Login</a></span>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+

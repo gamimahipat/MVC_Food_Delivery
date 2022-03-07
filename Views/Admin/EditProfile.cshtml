@@ -1,0 +1,136 @@
+﻿@model MVC_Food_Delivery.Models.Staff_Details_Master
+
+@{
+    ViewBag.Title = "EditProfile";
+    Layout = "~/Views/Shared/_Adminpage.cshtml";
+}
+
+
+
+<script>
+
+
+    $(document).ready(function () {
+
+        var message = "@ViewBag.emassage";
+
+        if (message != "") {
+            debugger;
+           
+            let timerInterval
+            Swal.fire({
+                title: message,
+               /* html: 'I will close in <b></b> milliseconds.',*/
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading()
+                    const b = Swal.getHtmlContainer().querySelector('b')
+                    timerInterval = setInterval(() => {
+                        b.textContent = Swal.getTimerLeft()
+                    }, 100)
+                },
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
+            }).then((result) => {
+                /* Read more about handling dismissals below */
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    console.log('I was closed by the timer')
+                }
+            })
+
+        }
+
+     
+    });
+
+</script>
+
+
+<section class="content">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h2>Edit Profile</h2>
+                </div>
+                <div class="box-body">
+
+                    @*<form action="@Url.Action("Create", "ProductMaster")" method="POST" class="form-element">*@
+                    @using (Html.BeginForm("EditProfile", "Admin", FormMethod.Post,
+                    new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.HiddenFor(model => model.WorkerTypeID)
+                        @Html.HiddenFor(model => model.UserID)
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.WorkerName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.WorkerName, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.WorkerName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.WorkerMobileNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.WorkerMobileNo, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.WorkerMobileNo, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.WorkerAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.WorkerAddress, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.WorkerAddress, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.WorkerEmail, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.WorkerEmail, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.WorkerEmail, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.WorkerPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.WorkerPassword, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.WorkerPassword, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-actions mt-10">
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Update" class="btn btn-outline btn-success" />
+                                    <a href="@Url.Action("Index", "Admin")" class="btn btn-outline btn-danger">Back</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+

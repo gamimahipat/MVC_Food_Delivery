@@ -1,0 +1,167 @@
+﻿@model IEnumerable<MVC_Food_Delivery.Models.Order_Master>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<script>
+    $(document).ready(function () {
+        var message = "@TempData["smessage"]";
+
+        if (message != "") {
+
+            //Swal.fire(
+            //     message ,
+            //    '',
+            //    'success'
+            //)
+
+            Swal.fire({
+
+                icon: 'success',
+                title: message,
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
+
+
+
+        var message = "@TempData["ssmessage"]";
+
+        if (message != "") {
+            Swal.fire({
+
+                icon: 'success',
+                title: message,
+                showConfirmButton: false,
+                timer: 1500
+            })
+
+
+
+        }
+    });
+</script>
+
+
+<section class="cart-area ptb-100">
+    <div class="container">
+        <div class="cart-wrap">
+            <table class="table" id="tbl">
+                <thead class="thead">
+                    <tr>
+
+                        <th class="table-head" scope="col">CustomerName</th>
+                        <th class="table-head" scope="col">OrderDate</th>
+                        <th class="table-head" scope="col">TotalPrice</th>
+                        <th class="table-head" scope="col">PaymentStatus</th>
+
+                        <th class="table-head" scope="col">DeliveryStatus</th>
+                        <th class="table-head" scope="col">Address</th>
+                        <th class="table-head" scope="col">Show Map</th>
+                        <th class="table-head" scope="col">Action</th>
+                    </tr>
+                </thead>
+
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Customer_Master.CustomerName)
+                        </td>
+                        <td>
+                            @item.OrderDate.Value.ToShortDateString()
+                            @*@Html.DisplayFor(modelItem => item.OrderDate.Value.ToShortDateString())*@
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalPrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PaymentStatus)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DeliveryStatus)
+                        </td>
+                        <td class="nr">
+                            @item.Customer_Master.HouseNumber,@item.Customer_Master.Street,@item.Customer_Master.City,@item.Customer_Master.PostalCode
+
+                        </td>
+                        <td>
+                            <button class="p"><i class="fa-solid fa fa-eye fa-2x"></i></button>
+                            @*<a href="@Url.Action("Location", "Delivery", new { id = item.OrderID })" data-id="@item.OrderID" class="deleteBtn btn btn-icon-circle " data-original-title="Delete" data-toggle="tooltip">
+                                    <i class="fa-solid fa fa-eye fa-2x"></i>
+                                </a>*@
+                        </td>
+                        <td>
+
+                            <a href="@Url.Action("DeliverySuccess", "Delivery", new { id = item.OrderID })" data-id="@item.OrderID" class="deleteBtn btn btn-icon-circle " data-original-title="Delete" data-toggle="tooltip">
+                                <i class="fa-regular fa fa-truck fa-2x"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </table>
+
+        </div>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        var address =
+            $(".p").click(function () {
+                debugger;
+                var item = $(this).closest("tr").find(".nr").text();
+                var address = $.trim(item);
+                var f = "Maurya Times Square, 12 SF, Science City Rd, opp.R K Royal, Sola, Ahmedabad, Gujarat 380060";
+                var win = window.open('https://www.google.com/maps/search/' + address + '/@@<coordinates>,<zoomlevel>z', '_blank');
+
+                window.open(win, '_blank');
+            });
+    });
+</script>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,83 @@
+﻿@model MVC_Food_Delivery.ViewModels.OTPViewModel
+@{
+    ViewBag.Title = "EnterOTP";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<script>
+    $(document).ready(function () {
+
+        var message = "@TempData["inserterr"]";
+
+
+        if (message != "") {
+
+            Swal.fire({
+                icon: 'error',
+                title: message,
+
+            })
+        }
+
+        var message = "@TempData["insert"]";
+
+        if (message != "") {
+
+            
+            Swal.fire({
+
+                icon: 'success',
+                title: message,
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
+
+    });
+
+</script>
+
+
+<div class="page-title-area">
+    <img src="~/Images/2.jpg" style="height: 300px; width: 540px" alt="Title">
+    <div class="container">
+        <div class="page-title-content">
+            <h2>Enter OPT</h2>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="login-area ptb-100">
+    <div class="container">
+        <div class="login-item">
+            <form action="@Url.Action("EnterOTP", "Login")" method="POST">
+                <h3><b>Enter OTP</b></h3>
+                <hr />
+                <div class="form-group ">
+                    @Html.EditorFor(model => model.otp, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter OTP" } })
+                    @Html.ValidationMessageFor(model => model.otp, "", new { @class = "text-danger" })
+                </div>
+
+
+                <div class="text-center">
+                    <button type="submit" class="btn login-btn">verified OTP</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+

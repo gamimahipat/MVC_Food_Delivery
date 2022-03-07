@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewBag.Title = "Success";
+}
+
+<script>
+
+
+    $(document).ready(function () {
+
+        var message = "@TempData["smessage"]";
+
+        if (message != "") {
+
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: message,
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
+        var message = "@TempData["emessage"]";
+
+        if (message != "") {
+
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: message,
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
+
+    });
+
+</script>
+
+
+<style>
+    .content {
+        font-family: 'Helvetica Neue';
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+        font-size: 30px;
+    }
+
+    .title {
+        font-weight: bold;
+        color: #5c5c5c;
+    }
+
+    .symbol {
+        -webkit-text-stroke: 13px white;
+        font-size: 150px;
+        color: #37b20a;
+    }
+
+    .text {
+        margin-top: 15px;
+        font-size: 25px;
+        color: #e07202;
+        text-align: center;
+        font-family: 'avenir';
+        font-weight: lighter;
+    }
+</style>
+
+<script>
+    // window.onload = function () { window.location.reload() }
+    $(document).ready(function () {
+
+
+        //    window.location.href = "https://localhost:44354/Payment/Success";
+
+    });
+</script>
+<br />
+<br />
+<br />
+<br />
+<br />
+<div class='content'>
+    <div class='fa fa-check-circle-o symbol'></div>
+    <div class='title'>Thank you!</div>
+    <div class='text'>Your Payment has been received!</div>
+
+</div>
+<div class="text-center">
+
+
+    <div class="cmn-btn">
+        <a style="font-size:26px" class="banner-btn-left" href="@Url.Action("Invoice", "Payment")">
+            @*<i class='bx bxs-user-plus'></i>*@
+            @*<i class="fas fa-file-invoice-dollar"></i>*@
+            <span class="iconify" data-icon="fa-solid:file-invoice"></span>
+            Print Your Invoice
+        </a>
+
+    </div>
+
+</div>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
